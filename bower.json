@@ -1,0 +1,14 @@
+{
+  "name": "socketio-balls",
+  "description": "",
+  "main": "",
+  "authors": [
+    "adgzl-emn"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/adgzl-emn/socketio-live-balls",
+  "dependencies": {
+    "angular": "^1.8.3",
+    "semantic": "^2.5.0"
+  }
+}
