@@ -1,5 +1,7 @@
 app.controller('indexController',['$scope' , 'indexFactory' , ($scope , indexFactory) => {
 
+    $scope.messages = [];
+
     $scope.init = () => {
         const username = prompt('Please Enter Username');
 
@@ -17,8 +19,34 @@ app.controller('indexController',['$scope' , 'indexFactory' , ($scope , indexFac
     function initSocket(username) {
         indexFactory.connectSocket('http://localhost:3000',connectOptions)
             .then((socket) => {
-                console.log(username + ' Baglantiyi Gerceklesti',socket);
                 socket.emit('newUser', { username });
+
+                socket.on('newUser', (data) => {
+                    const messageData = {
+                        type: {
+                            code: 0,     //server or user message
+                            status: 1   //login or disconnect message
+                        },
+                        username: data.username
+                    };
+
+                    $scope.messages.push(messageData);
+                    $scope.$apply();
+                });
+
+                socket.on('disUser', (data) => {
+                    const messageData = {
+                        type: {
+                            code: 0,     //server or user message
+                            status: 0   //login or disconnect message
+                        },
+                        username: data.username
+                    };
+
+                    $scope.messages.push(messageData);
+                    $scope.$apply();
+                });
+
             }).catch((err) => {
             console.log(err);
         });
