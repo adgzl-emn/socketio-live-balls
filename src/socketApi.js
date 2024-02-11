@@ -18,8 +18,7 @@ io.on('connection' , (socket) => {
            }
        }
 
-       const userData = Object.assign(data,defaultData);
-       users[socket.id] = userData;
+       users[socket.id] = Object.assign(data,defaultData);
        console.log(users);
 
        socket.broadcast.emit('newUser',users[socket.id]);
