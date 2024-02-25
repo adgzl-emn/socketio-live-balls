@@ -20,7 +20,6 @@ io.on('connection' , (socket) => {
            },
            color : randomColor()
        }
-       console.log(defaultData);
        users[socket.id] = Object.assign(data,defaultData);
 
        socket.broadcast.emit('newUser',users[socket.id]);
@@ -40,11 +39,16 @@ io.on('connection' , (socket) => {
        });
     });
 
+    socket.on('newMessage', (data) => {
+        socketId = '';
+        const messageData = Object.assign({socketId : socket.id} , data);
+        socket.broadcast.emit('newMessages',messageData);
+    });
+
 
     socket.on('disconnect' , () => {
        socket.broadcast.emit('disUser', users[socket.id]);
        delete users[socket.id];
-       console.log(users);
     });
 
 });
